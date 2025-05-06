@@ -11,7 +11,7 @@
       flex-direction: column; /* Sắp xếp theo cột để footer ở dưới */
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là toàn màn hình */
       margin: 0;
       background-color: #f0f0f0;
     }
@@ -39,14 +39,14 @@
     button:hover {
       background-color: #0056b3;
     }
-    #content {
-      display: none;
-    }
     #sign-out-btn {
       background-color: #dc3545; /* Màu đỏ cho nút đăng xuất */
     }
     #sign-out-btn:hover {
       background-color: #c82333;
+    }
+    #content {
+      display: none;
     }
     footer {
       position: fixed; /* Footer cố định ở dưới cùng */
@@ -72,13 +72,18 @@
       <h1>🧰 IBC TOOLKIT</h1>
       <p>Website tải phần mềm nội bộ cho anh em kỹ thuật</p>
       <p><strong>Pass giải nén (nếu cần):</strong> ibc123qwe</p>
-      <a href="GX2000.zip">XPert Tools</a>
-      <a href="VantaGX.zip">Vanta Tools</a>
-      <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a>
-      <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a>
-      <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a>
+      <a href="GX2000.zip">XPert Tools</a><br>
+      <a href="VantaGX.zip">Vanta Tools</a><br>
+      <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a><br>
+      <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a><br>
+      <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a><br>
     <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
+  </footer>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -170,6 +175,24 @@
           console.error('Lỗi đăng nhập:', error);
           alert('Lỗi đăng nhập: ' + error.message);
         });
+    }
+
+    // Hàm đăng xuất
+    function signOut() {
+      if (typeof firebase === 'undefined') {
+        console.error('Firebase SDK không tải được');
+        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+        return;
+      }
+
+      firebase.auth().signOut().then(() => {
+        console.log('Đăng xuất thành công');
+        alert('Bạn đã đăng xuất!');
+        window.location.reload(); // Tải lại trang để hiển thị form đăng nhập
+      }).catch((error) => {
+        console.error('Lỗi đăng xuất:', error);
+        alert('Lỗi đăng xuất: ' + error.message);
+      });
     }
   </script>
 </body>
