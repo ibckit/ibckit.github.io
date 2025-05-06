@@ -55,17 +55,17 @@
   </div>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
   <script>
-    // Cấu hình maxlength Firebase
+    // Cấu hình Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
-      authDomain: "ibckit-website.firebaseapp.com",
-      projectId: "ibckit-website",
-      storageBucket: "ibckit-website.firebasestorage.app",
-      messagingSenderId: "56637750437",
-      appId: "1:56637750437:web:2155db3732cf2d8e51214c"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
     // Khởi tạo Firebase
@@ -82,7 +82,7 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      console.log('Đang thử đăng nhập với username:', username, 'và password:', password);
+      console.log('Đang thử đăng nhập với username:', username);
 
       if (username !== 'ibckit') {
         console.log('Username sai');
@@ -107,7 +107,7 @@
         })
         .catch((error) => {
           console.error('Lỗi đăng nhập:', error);
-          alert('Lỗi đăng nhập: ' + (error.code === 'auth/wrong-password' ? 'Sai mật khẩu!' : error.message));
+          alert('Lỗi đăng nhập: ' + error.message);
         });
     }
 
