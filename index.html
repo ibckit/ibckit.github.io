@@ -5,10 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng nhập - ibckit.github.io</title>
   <style>
-    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-    #login-form, #content { text-align: center; }
-    input, button { padding: 10px; margin: 5px; }
-    #content { display: none; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #login-form, #content {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #content {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -19,14 +50,13 @@
     <button onclick="signIn()">Đăng nhập</button>
   </div>
   <div id="content">
-    <h1>Chào mừng đến với ibckit.github.io!</h1>
-    <!-- Nội dung website của bạn sẽ ở đây -->
-	
+    <h1>Đăng nhập thành công!</h1>
+    <p>Chào mừng đến với ibckit.github.io!</p>
   </div>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
   <script>
     // Cấu hình Firebase
     const firebaseConfig = {
@@ -44,25 +74,29 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      // Kiểm tra username
+      console.log('Đang thử đăng nhập với username:', username);
+
       if (username !== 'ibckit') {
         alert('Sai username!');
         return;
       }
 
-      // Đăng nhập với Firebase
-      firebase.auth().signInWithEmailAndPassword('ibckit@gmail.com', password)
+      console.log('Gọi Firebase Authentication');
+      firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
+          console.log('Đăng nhập thành công:', userCredential.user);
           document.getElementById('login-form').style.display = 'none';
           document.getElementById('content').style.display = 'block';
         })
         .catch((error) => {
+          console.log('Lỗi đăng nhập:', error);
           alert('Lỗi: ' + (error.code === 'auth/wrong-password' ? 'Sai mật khẩu!' : error.message));
         });
     }
 
     // Kiểm tra trạng thái đăng nhập
     firebase.auth().onAuthStateChanged((user) => {
+	console.log('Trạng thái người dùng:', user);
       if (user) {
         document.getElementById('login-form').style.display = 'none';
         document.getElementById('content').style.display = 'block';
