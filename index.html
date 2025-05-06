@@ -8,9 +8,10 @@
     body {
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column; /* Sắp xếp theo cột để footer ở dưới */
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là toàn màn hình */
       margin: 0;
       background-color: #f0f0f0;
     }
@@ -20,6 +21,7 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px; /* Khoảng cách giữa nội dung và footer */
     }
     input, button {
       padding: 10px;
@@ -40,48 +42,25 @@
     #content {
       display: none;
     }
-    .card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    text-align: center;
-    max-width: 480px;
-    width: 100%;
-  }
-  .card img {
-    width: 140px;
-    margin-bottom: 20px;
-  }
-  .card h1 {
-    font-size: 24px;
-    margin: 10px 0;
-    color: #333;
-  }
-  .card p {
-    font-size: 15px;
-    color: #555;
-    margin: 8px 0;
-  }
-  .card a {
-    display: block;
-    margin: 6px 0;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .card a:hover {
-    text-decoration: underline;
-  }
-  footer {
-    text-align: center;
-    font-size: 13px;
-    color: #888;
-    padding: 16px;
-  }
+    #sign-out-btn {
+      background-color: #dc3545; /* Màu đỏ cho nút đăng xuất */
+    }
+    #sign-out-btn:hover {
+      background-color: #c82333;
+    }
+    footer {
+      position: fixed; /* Footer cố định ở dưới cùng */
+      bottom: 10px;
+      text-align: center;
+      color: #333;
+      font-size: 14px;
+    }
+    footer strong {
+      color: #007bff; /* Màu xanh cho tên Hoàng Hải */
+    }
   </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
   <div id="login-form">
     <h2>Đăng nhập</h2>
     <input type="text" id="username" placeholder="Username" autocomplete="username">
@@ -89,8 +68,7 @@
     <button onclick="signIn()">Đăng nhập</button>
   </div>
   <div id="content">
-    <div class="card">
-      <img src="LogoIBC.webp" alt="IBC Logo">
+    <img src="LogoIBC.webp" alt="IBC Logo">
       <h1>🧰 IBC TOOLKIT</h1>
       <p>Website tải phần mềm nội bộ cho anh em kỹ thuật</p>
       <p><strong>Pass giải nén (nếu cần):</strong> ibc123qwe</p>
@@ -99,9 +77,11 @@
       <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a>
       <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a>
       <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a>
-    </div>
+    
+    <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
   </div>
 
+  <!-- Footer -->
   <footer>
     © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
   </footer>
@@ -181,22 +161,4 @@
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
           console.log('Đăng nhập thành công:', userCredential.user);
-          const loginForm = document.getElementById('login-form');
-          const content = document.getElementById('content');
-          if (loginForm && content) {
-            loginForm.style.display = 'none';
-            content.style.display = 'block';
-            console.log('Đã chuyển sang nội dung');
-          } else {
-            console.error('Không tìm thấy login-form hoặc content');
-            alert('Lỗi: Không tìm thấy phần tử HTML');
-          }
-        })
-        .catch((error) => {
-          console.error('Lỗi đăng nhập:', error);
-          alert('Lỗi đăng nhập: ' + error.message);
-        });
-    }
-  </script>
-</body>
-</html>
+          const loginForm = document.getElementById('login
