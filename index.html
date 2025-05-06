@@ -55,30 +55,65 @@
   </div>
 
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script>
     // Cấu hình Firebase
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
+      authDomain: "ibckit-website.firebaseapp.com",
+      projectId: "ibckit-website",
+      storageBucket: "ibckit-website.firebasestorage.app",
+      messagingSenderId: "56637750437",
+      appId: "1:56637750437:web:2155db3732cf2d8e51214c"
     };
 
-    // Khởi tạo Firebase
-    try {
-      firebase.initializeApp(firebaseConfig);
-      console.log('Firebase khởi tạo thành công');
-    } catch (error) {
-      console.error('Lỗi khởi tạo Firebase:', error);
-      alert('Lỗi khởi tạo Firebase: ' + error.message);
-    }
+    // Chờ SDK tải xong rồi khởi tạo Firebase
+    window.onload = function() {
+      if (typeof firebase === 'undefined') {
+        console.error('Firebase SDK không tải được');
+        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+        return;
+      }
+
+      try {
+        firebase.initializeApp(firebaseConfig);
+        console.log('Firebase khởi tạo thành công');
+      } catch (error) {
+        console.error('Lỗi khởi tạo Firebase:', error);
+        alert('Lỗi khởi tạo Firebase: ' + error.message);
+      }
+
+      // Kiểm tra trạng thái đăng nhập
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log('Trạng thái người dùng:', user);
+        const loginForm = document.getElementById('login-form');
+        const content = document.getElementById('content');
+        if (loginForm && content) {
+          if (user) {
+            loginForm.style.display = 'none';
+            content.style.display = 'block';
+            console.log('Người dùng đã đăng nhập, hiển thị nội dung');
+          } else {
+            loginForm.style.display = 'block';
+            content.style.display = 'none';
+            console.log('Chưa đăng nhập, hiển thị form');
+          }
+        } else {
+          console.error('Không tìm thấy login-form hoặc content');
+          alert('Lỗi: Không tìm thấy phần tử HTML');
+        }
+      });
+    };
 
     // Hàm đăng nhập
     function signIn() {
+      if (typeof firebase === 'undefined') {
+        console.error('Firebase SDK không tải được');
+        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+        return;
+      }
+
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
@@ -110,27 +145,6 @@
           alert('Lỗi đăng nhập: ' + error.message);
         });
     }
-
-    // Kiểm tra trạng thái đăng nhập
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log('Trạng thái người dùng:', user);
-      const loginForm = document.getElementById('login-form');
-      const content = document.getElementById('content');
-      if (loginForm && content) {
-        if (user) {
-          loginForm.style.display = 'none';
-          content.style.display = 'block';
-          console.log('Người dùng đã đăng nhập, hiển thị nội dung');
-        } else {
-          loginForm.style.display = 'block';
-          content.style.display = 'none';
-          console.log('Chưa đăng nhập, hiển thị form');
-        }
-      } else {
-        console.error('Không tìm thấy login-form hoặc content');
-        alert('Lỗi: Không tìm thấy phần tử HTML');
-      }
-    });
   </script>
 </body>
 </html>
