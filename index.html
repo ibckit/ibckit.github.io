@@ -58,7 +58,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
   <script>
-    // Cấu hình Firebase
+    // Cấu hình maxlength Firebase
     const firebaseConfig = {
   apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
   authDomain: "ibckit-website.firebaseapp.com",
@@ -67,16 +67,25 @@
   messagingSenderId: "56637750437",
   appId: "1:56637750437:web:2155db3732cf2d8e51214c"
 };
-    firebase.initializeApp(firebaseConfig);
+
+    // Khởi tạo Firebase
+    try {
+      firebase.initializeApp(firebaseConfig);
+      console.log('Firebase khởi tạo thành công');
+    } catch (error) {
+      console.error('Lỗi khởi tạo Firebase:', error);
+      alert('Lỗi khởi tạo Firebase: ' + error.message);
+    }
 
     // Hàm đăng nhập
     function signIn() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      console.log('Đang thử đăng nhập với username:', username);
+      console.log('Đang thử đăng nhập với username:', username, 'và password:', password);
 
       if (username !== 'ibckit') {
+        console.log('Username sai');
         alert('Sai username!');
         return;
       }
@@ -85,24 +94,41 @@
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
           console.log('Đăng nhập thành công:', userCredential.user);
-          document.getElementById('login-form').style.display = 'none';
-          document.getElementById('content').style.display = 'block';
+          const loginForm = document.getElementById('login-form');
+          const content = document.getElementById('content');
+          if (loginForm && content) {
+            loginForm.style.display = 'none';
+            content.style.display = 'block';
+            console.log('Đã chuyển sang nội dung');
+          } else {
+            console.error('Không tìm thấy login-form hoặc content');
+            alert('Lỗi: Không tìm thấy phần tử HTML');
+          }
         })
         .catch((error) => {
-          console.log('Lỗi đăng nhập:', error);
-          alert('Lỗi: ' + (error.code === 'auth/wrong-password' ? 'Sai mật khẩu!' : error.message));
+          console.error('Lỗi đăng nhập:', error);
+          alert('Lỗi đăng nhập: ' + (error.code === 'auth/wrong-password' ? 'Sai mật khẩu!' : error.message));
         });
     }
 
     // Kiểm tra trạng thái đăng nhập
     firebase.auth().onAuthStateChanged((user) => {
-	console.log('Trạng thái người dùng:', user);
-      if (user) {
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
+      console.log('Trạng thái người dùng:', user);
+      const loginForm = document.getElementById('login-form');
+      const content = document.getElementById('content');
+      if (loginForm && content) {
+        if (user) {
+          loginForm.style.display = 'none';
+          content.style.display = 'block';
+          console.log('Người dùng đã đăng nhập, hiển thị nội dung');
+        } else {
+          loginForm.style.display = 'block';
+          content.style.display = 'none';
+          console.log('Chưa đăng nhập, hiển thị form');
+        }
       } else {
-        document.getElementById('login-form').style.display = 'block';
-        document.getElementById('content').style.display = 'none';
+        console.error('Không tìm thấy login-form hoặc content');
+        alert('Lỗi: Không tìm thấy phần tử HTML');
       }
     });
   </script>
