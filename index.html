@@ -11,7 +11,7 @@
       flex-direction: column; /* Sắp xếp theo cột để footer ở dưới */
       justify-content: center;
       align-items: center;
-      min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là toàn màn hình */
+      min-height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
     }
@@ -77,14 +77,8 @@
       <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a>
       <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a>
       <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a>
-    
     <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
   </div>
-
-  <!-- Footer -->
-  <footer>
-    © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
-  </footer>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -161,4 +155,22 @@
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
           console.log('Đăng nhập thành công:', userCredential.user);
-          const loginForm = document.getElementById('login
+          const loginForm = document.getElementById('login-form');
+          const content = document.getElementById('content');
+          if (loginForm && content) {
+            loginForm.style.display = 'none';
+            content.style.display = 'block';
+            console.log('Đã chuyển sang nội dung');
+          } else {
+            console.error('Không tìm thấy login-form hoặc content');
+            alert('Lỗi: Không tìm thấy phần tử HTML');
+          }
+        })
+        .catch((error) => {
+          console.error('Lỗi đăng nhập:', error);
+          alert('Lỗi đăng nhập: ' + error.message);
+        });
+    }
+  </script>
+</body>
+</html>
