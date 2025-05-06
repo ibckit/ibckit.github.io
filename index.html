@@ -5,14 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng nhập - ibckit.github.io</title>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
     body {
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    #main-content {
+      flex: 1;
+      display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
     }
     #login-form, #content {
       text-align: center;
@@ -40,124 +48,98 @@
     #content {
       display: none;
     }
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
-  <div id="login-form">
-    <h2>Đăng nhập</h2>
-    <input type="text" id="username" placeholder="Username" autocomplete="username">
-    <input type="password" id="password" placeholder="Password" autocomplete="current-password">
-    <button onclick="signIn()">Đăng nhập</button>
-  </div>
-  <div id="content">
-    <img class="logo" src="LogoIBC.webp" alt="IBC Logo">
-    <h1>📥 IBC TOOLKIT</h1>
-    <p>Website tải phần mềm nội bộ cho anh em kỹ thuật</p>
-    <p>Pass giải nén (nếu cần): ibc123qwe</p>
-    <div class="box">
-      <a class="download-link" href="GX2000.zip">XPert Tools</a><br>
-      <a class="download-link" href="VantaGX.zip">Vanta Tools</a><br>
-      <a class="download-link" href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a><br>
-      <a class="download-link" href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a><br>
-      <a class="download-link" href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a><br>
-      
+  <div id="main-content">
+    <div id="login-form">
+      <h2>Đăng nhập</h2>
+      <input type="text" id="username" placeholder="Username" autocomplete="username">
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+      <button onclick="signIn()">Đăng nhập</button>
+    </div>
+    <div id="content">
+      <img class="logo" src="LogoIBC.webp" alt="IBC Logo">
+      <h1>📥 IBC TOOLKIT</h1>
+      <p>Website tải phần mềm nội bộ cho anh em kỹ thuật</p>
+      <p>Pass giải nén (nếu cần): ibc123qwe</p>
+      <div class="box">
+        <a class="download-link" href="GX2000.zip">XPert Tools</a><br>
+        <a class="download-link" href="VantaGX.zip">Vanta Tools</a><br>
+        <a class="download-link" href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158</a><br>
+        <a class="download-link" href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158</a><br>
+        <a class="download-link" href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App</a><br>
+      </div>
     </div>
   </div>
+
+  <footer>
+    © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
+  </footer>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script>
-    // Cấu hình Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
       authDomain: "ibckit-website.firebaseapp.com",
       projectId: "ibckit-website",
-      storageBucket: "ibckit-website.firebasestorage.app",
+      storageBucket: "ibckit-website.firebaseapp.com",
       messagingSenderId: "56637750437",
       appId: "1:56637750437:web:2155db3732cf2d8e51214c"
     };
 
-    // Chờ SDK tải xong rồi khởi tạo Firebase
     window.onload = function() {
       if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK không tải được');
-        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+        alert('Lỗi: Firebase SDK không tải được.');
         return;
       }
 
       try {
         firebase.initializeApp(firebaseConfig);
-        console.log('Firebase khởi tạo thành công');
       } catch (error) {
-        console.error('Lỗi khởi tạo Firebase:', error);
         alert('Lỗi khởi tạo Firebase: ' + error.message);
+        return;
       }
 
-      // Kiểm tra trạng thái đăng nhập
       firebase.auth().onAuthStateChanged((user) => {
-        console.log('Trạng thái người dùng:', user);
         const loginForm = document.getElementById('login-form');
         const content = document.getElementById('content');
-        if (loginForm && content) {
-          if (user) {
-            loginForm.style.display = 'none';
-            content.style.display = 'block';
-            console.log('Người dùng đã đăng nhập, hiển thị nội dung');
-          } else {
-            loginForm.style.display = 'block';
-            content.style.display = 'none';
-            console.log('Chưa đăng nhập, hiển thị form');
-          }
+        if (user) {
+          loginForm.style.display = 'none';
+          content.style.display = 'block';
         } else {
-          console.error('Không tìm thấy login-form hoặc content');
-          alert('Lỗi: Không tìm thấy phần tử HTML');
+          loginForm.style.display = 'block';
+          content.style.display = 'none';
         }
       });
     };
 
-    // Hàm đăng nhập
     function signIn() {
-      if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK không tải được');
-        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
-        return;
-      }
-
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      console.log('Đang thử đăng nhập với username:', username);
-
       if (username !== 'ibckit') {
-        console.log('Username sai');
         alert('Sai username!');
         return;
       }
 
-      console.log('Gọi Firebase Authentication');
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
-        .then((userCredential) => {
-          console.log('Đăng nhập thành công:', userCredential.user);
-          const loginForm = document.getElementById('login-form');
-          const content = document.getElementById('content');
-          if (loginForm && content) {
-            loginForm.style.display = 'none';
-            content.style.display = 'block';
-            console.log('Đã chuyển sang nội dung');
-          } else {
-            console.error('Không tìm thấy login-form hoặc content');
-            alert('Lỗi: Không tìm thấy phần tử HTML');
-          }
+        .then(() => {
+          document.getElementById('login-form').style.display = 'none';
+          document.getElementById('content').style.display = 'block';
         })
         .catch((error) => {
-          console.error('Lỗi đăng nhập:', error);
           alert('Lỗi đăng nhập: ' + error.message);
         });
     }
   </script>
-<footer style="text-align: center; padding: 20px; font-size: 14px; color: #666;">
-    © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
-  </footer>
 </body>
 </html>
