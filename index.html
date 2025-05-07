@@ -249,13 +249,6 @@
     }
 
     window.onload = function() {
-      document.addEventListener('DOMContentLoaded', function() {
-        document.addEventListener('contextmenu', function(event) {
-          event.preventDefault();
-      // Bạn có thể tùy chọn hiển thị một thông báo ở đây nếu muốn
-      // alert("Chức năng chuột phải đã bị vô hiệu hóa trên trang này.");
-        });
-      });
       if (typeof firebase === 'undefined') {
         console.error('Firebase SDK không tải được');
         alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
@@ -356,6 +349,13 @@
         alert('Lỗi đăng xuất: ' + error.message);
       });
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('contextmenu', function(event) {
+          event.preventDefault();
+      // Bạn có thể tùy chọn hiển thị một thông báo ở đây nếu muốn
+      // alert("Chức năng chuột phải đã bị vô hiệu hóa trên trang này.");
+        });
+      });
   </script>
 </body>
 </html>
