@@ -127,8 +127,8 @@
 
     /* Styles for dynamically added content */
     #content img {
-      max-width: 300px;
-      margin-bottom: 20px;
+      max-width: 200px;
+      margin-bottom: 10px;
     }
 
     #content a {
@@ -249,6 +249,13 @@
     }
 
     window.onload = function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('contextmenu', function(event) {
+          event.preventDefault();
+      // Bạn có thể tùy chọn hiển thị một thông báo ở đây nếu muốn
+      // alert("Chức năng chuột phải đã bị vô hiệu hóa trên trang này.");
+        });
+      });
       if (typeof firebase === 'undefined') {
         console.error('Firebase SDK không tải được');
         alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
