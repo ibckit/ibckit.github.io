@@ -1,101 +1,238 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IBC Toolkit</title>
   <link rel="icon" type="image/png" href="LogoIBC.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #007bff;
+      --primary-hover-color: #0056b3;
+      --danger-color: #dc3545;
+      --danger-hover-color: #c82333;
+      --light-gray-color: #f8f9fa;
+      --medium-gray-color: #e9ecef;
+      --dark-gray-color: #343a40;
+      --text-color: #212529;
+      --border-color: #ced4da;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      --box-shadow-light: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', Arial, sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      background-color: #f0f0f0;
+      background-color: var(--light-gray-color);
+      color: var(--text-color);
+      line-height: 1.6;
     }
+
     #login-form, #content {
       text-align: center;
       background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px 40px; /* Increased padding */
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 20px;
+      width: 90%;
+      max-width: 450px; /* Max width for forms/content area */
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    h2 {
+      color: var(--dark-gray-color);
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    p strong {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    input[type="password"] {
+      padding: 12px 15px;
+      margin: 10px 0; /* Adjusted margin */
+      width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      box-sizing: border-box; /* Important for 100% width */
+      font-size: 16px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      outline: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin-top: 15px; /* Added margin top */
+      width: 100%; /* Full width button */
+      border: none;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover-color);
+      transform: translateY(-1px);
+    }
+    
+    button:active {
+        transform: translateY(0);
+    }
+
+    #sign-out-btn {
+      background-color: var(--danger-color);
+      margin-top: 30px; /* More space before sign out */
+    }
+
+    #sign-out-btn:hover {
+      background-color: var(--danger-hover-color);
+    }
+
+    #content {
+      display: none; /* Initially hidden */
+    }
+
+    #content img {
+      max-width: 100px; /* Control logo size */
       margin-bottom: 20px;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      width: 200px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+
+    #content a {
+      display: block; /* Make links block elements */
+      background-color: var(--medium-gray-color);
+      color: var(--dark-gray-color);
+      padding: 12px 15px;
+      margin: 10px 0;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border-color);
     }
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
+
+    #content a:hover {
+      background-color: #d3d9df;
+      color: var(--primary-color);
+      box-shadow: var(--box-shadow-light);
     }
-    button:hover {
-      background-color: #0056b3;
+    
+    /* Specific styling for Google Drive links to make them stand out */
+    #content a[href*="drive.google.com"] {
+        background-color: #e8f0fe; /* Light blue, Google-ish */
+        border-color: #adcffa;
+        color: #174ea6; /* Darker blue for text */
     }
-    #sign-out-btn {
-      background-color: #dc3545;
+
+    #content a[href*="drive.google.com"]:hover {
+        background-color: #d0e3ff;
+        border-color: #8abaff;
+        color: #0b3e8f;
     }
-    #sign-out-btn:hover {
-      background-color: #c82333;
-    }
-    #content {
-      display: none;
-    }
+
+
     footer {
       position: fixed;
-      bottom: 10px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px 0; /* Increased padding */
       text-align: center;
-      color: #333;
+      color: #6c757d; /* Muted color */
       font-size: 14px;
+      background-color: white; /* Added background to footer */
+      border-top: 1px solid var(--medium-gray-color); /* Subtle top border */
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
     }
+
     footer strong {
-      color: #007bff;
+      color: var(--primary-color);
+      font-weight: 500;
     }
+
+    /* Small screen adjustments */
+    @media (max-width: 600px) {
+        #login-form, #content {
+            padding: 20px;
+            width: calc(100% - 40px); /* Adjust width with padding in mind */
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+
   </style>
 </head>
 <body>
   <div id="login-form">
     <h2>Đăng nhập</h2>
-    <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+    <input type="password" id="password" placeholder="Mật khẩu" autocomplete="current-password">
     <button onclick="signIn()">Đăng nhập</button>
   </div>
+
   <div id="content">
     <img src="LogoIBC.webp" alt="IBC Logo">
     <h1>🧰 IBC TOOLKIT</h1>
-    <p>Website tải phần mềm nội bộ cho anh em kỹ thuật</p>
+    <p>Website tải phần mềm nội bộ cho anh em kỹ thuật.</p>
     <p>Pass giải nén (nếu cần): <strong><em>ibc123qwe</em></strong></p>
-    <a href="DefenderRemover.rar">DefenderRemover.rar</a><br>
-    <a href="GX2000.zip">XPert Tools GX2000.zip</a><br>
-    <a href="VantaGX.zip">Vanta Tools VantaGX.zip</a><br>
-    <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158.rar</a><br>
-    <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158.zip</a><br>
-    <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App.rar</a><br>
+    <a href="DefenderRemover.rar">DefenderRemover.rar</a>
+    <a href="GX2000.zip">XPert Tools GX2000.zip</a>
+    <a href="VantaGX.zip">Vanta Tools VantaGX.zip</a>
+    <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158.rar (Google Drive)</a>
+    <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158.zip (Google Drive)</a>
+    <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App.rar (Google Drive)</a>
     <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
   </div>
 
-  <!-- Footer -->
   <footer>
-    © 2025 IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
+    © <script>document.write(new Date().getFullYear())</script> IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
   </footer>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script>
     // Cấu hình Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
+      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s", // KEEP YOUR API KEY SECRET if this were a public repo
       authDomain: "ibckit-website.firebaseapp.com",
       projectId: "ibckit-website",
-      storageBucket: "ibckit-website.firebasestorage.app",
+      storageBucket: "ibckit-website.firebasestorage.app", // Corrected: .appspot.com typically
       messagingSenderId: "56637750437",
       appId: "1:56637750437:web:2155db3732cf2d8e51214c"
     };
@@ -109,11 +246,17 @@
       }
 
       try {
-        firebase.initializeApp(firebaseConfig);
-        console.log('Firebase khởi tạo thành công');
+        if (!firebase.apps.length) { // Check if Firebase is already initialized
+            firebase.initializeApp(firebaseConfig);
+            console.log('Firebase khởi tạo thành công');
+        } else {
+            firebase.app(); // if already initialized, use that one
+            console.log('Firebase đã được khởi tạo trước đó');
+        }
       } catch (error) {
         console.error('Lỗi khởi tạo Firebase:', error);
         alert('Lỗi khởi tạo Firebase: ' + error.message);
+        return; // Stop execution if Firebase fails to initialize
       }
 
       // Kiểm tra trạng thái đăng nhập
@@ -121,67 +264,81 @@
         console.log('Trạng thái người dùng:', user);
         const loginForm = document.getElementById('login-form');
         const content = document.getElementById('content');
-        if (loginForm && content) {
+        const footer = document.querySelector('footer');
+
+        if (loginForm && content && footer) {
           if (user) {
             loginForm.style.display = 'none';
             content.style.display = 'block';
+            footer.style.position = 'relative'; // Allow content to push footer
+            footer.style.marginTop = '40px'; // Add some space above footer
             console.log('Người dùng đã đăng nhập, hiển thị nội dung');
           } else {
             loginForm.style.display = 'block';
             content.style.display = 'none';
+            footer.style.position = 'fixed'; // Keep footer at bottom for login
+            footer.style.marginTop = '0';
             console.log('Chưa đăng nhập, hiển thị form');
           }
         } else {
-          console.error('Không tìm thấy login-form hoặc content');
-          alert('Lỗi: Không tìm thấy phần tử HTML');
+          console.error('Không tìm thấy login-form, content hoặc footer');
+          alert('Lỗi: Không tìm thấy phần tử HTML quan trọng.');
         }
       });
     };
 
     // Hàm đăng nhập
     function signIn() {
-      if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK không tải được');
-        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+      if (typeof firebase === 'undefined' || !firebase.apps.length) {
+        console.error('Firebase SDK chưa sẵn sàng');
+        alert('Lỗi: Firebase chưa sẵn sàng. Vui lòng thử lại.');
         return;
       }
 
-      const password = document.getElementById('password').value;
+      const passwordInput = document.getElementById('password');
+      if (!passwordInput) {
+          alert('Lỗi: Không tìm thấy trường mật khẩu.');
+          return;
+      }
+      const password = passwordInput.value;
 
-      console.log('Đang thử đăng nhập với password:', password);
+      if (!password) {
+          alert('Vui lòng nhập mật khẩu.');
+          return;
+      }
+      
+      console.log('Đang thử đăng nhập...');
 
+      // Using a dummy email as per your original setup
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
           console.log('Đăng nhập thành công:', userCredential.user);
-          const loginForm = document.getElementById('login-form');
-          const content = document.getElementById('content');
-          if (loginForm && content) {
-            loginForm.style.display = 'none';
-            content.style.display = 'block';
-            console.log('Đã chuyển sang nội dung');
-          } else {
-            console.error('Không tìm thấy login-form hoặc content');
-            alert('Lỗi: Không tìm thấy phần tử HTML');
-          }
+          // UI update is handled by onAuthStateChanged
         })
         .catch((error) => {
           console.error('Lỗi đăng nhập:', error);
-          alert('Lỗi đăng nhập: ' + error.message);
+          let errorMessage = 'Lỗi đăng nhập. Vui lòng thử lại.';
+          if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+            errorMessage = 'Sai mật khẩu. Vui lòng kiểm tra lại.';
+          } else if (error.code === 'auth/too-many-requests') {
+            errorMessage = 'Quá nhiều lần thử không thành công. Vui lòng thử lại sau.';
+          }
+          alert(errorMessage);
         });
     }
 
     // Hàm đăng xuất
     function signOut() {
-      if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK không tải được');
-        alert('Lỗi: Firebase SDK không tải được. Kiểm tra kết nối mạng hoặc CDN.');
+      if (typeof firebase === 'undefined' || !firebase.apps.length) {
+        console.error('Firebase SDK chưa sẵn sàng');
+        alert('Lỗi: Firebase chưa sẵn sàng. Vui lòng thử lại.');
         return;
       }
 
       firebase.auth().signOut().then(() => {
         console.log('Đăng xuất thành công');
         alert('Bạn đã đăng xuất!');
-        window.location.reload();
+        // window.location.reload(); // onAuthStateChanged will handle UI update
       }).catch((error) => {
         console.error('Lỗi đăng xuất:', error);
         alert('Lỗi đăng xuất: ' + error.message);
