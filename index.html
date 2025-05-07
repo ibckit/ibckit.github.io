@@ -40,12 +40,12 @@
     #login-form, #content {
       text-align: center;
       background: white;
-      padding: 30px 40px; /* Increased padding */
+      padding: 30px 40px;
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow);
       margin-bottom: 20px;
       width: 90%;
-      max-width: 450px; /* Max width for forms/content area */
+      max-width: 450px;
     }
 
     h1 {
@@ -72,11 +72,11 @@
 
     input[type="password"] {
       padding: 12px 15px;
-      margin: 10px 0; /* Adjusted margin */
+      margin: 10px 0;
       width: 100%;
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
-      box-sizing: border-box; /* Important for 100% width */
+      box-sizing: border-box;
       font-size: 16px;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -87,10 +87,10 @@
       outline: none;
     }
 
-    button {
+    button { /* General button styling, will be dynamically added too */
       padding: 12px 20px;
-      margin-top: 15px; /* Added margin top */
-      width: 100%; /* Full width button */
+      margin-top: 15px;
+      width: 100%;
       border: none;
       border-radius: var(--border-radius);
       background-color: var(--primary-color);
@@ -111,9 +111,10 @@
         transform: translateY(0);
     }
 
+    /* Sign out button will be dynamically added, so we style its ID */
     #sign-out-btn {
       background-color: var(--danger-color);
-      margin-top: 30px; /* More space before sign out */
+      margin-top: 30px;
     }
 
     #sign-out-btn:hover {
@@ -124,13 +125,14 @@
       display: none; /* Initially hidden */
     }
 
+    /* Styles for dynamically added content */
     #content img {
-      max-width: 100px; /* Control logo size */
+      max-width: 100px;
       margin-bottom: 20px;
     }
 
     #content a {
-      display: block; /* Make links block elements */
+      display: block;
       background-color: var(--medium-gray-color);
       color: var(--dark-gray-color);
       padding: 12px 15px;
@@ -148,11 +150,10 @@
       box-shadow: var(--box-shadow-light);
     }
     
-    /* Specific styling for Google Drive links to make them stand out */
     #content a[href*="drive.google.com"] {
-        background-color: #e8f0fe; /* Light blue, Google-ish */
+        background-color: #e8f0fe;
         border-color: #adcffa;
-        color: #174ea6; /* Darker blue for text */
+        color: #174ea6;
     }
 
     #content a[href*="drive.google.com"]:hover {
@@ -161,18 +162,17 @@
         color: #0b3e8f;
     }
 
-
     footer {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      padding: 15px 0; /* Increased padding */
+      padding: 15px 0;
       text-align: center;
-      color: #6c757d; /* Muted color */
+      color: #6c757d;
       font-size: 14px;
-      background-color: white; /* Added background to footer */
-      border-top: 1px solid var(--medium-gray-color); /* Subtle top border */
+      background-color: white;
+      border-top: 1px solid var(--medium-gray-color);
       box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
     }
 
@@ -181,11 +181,10 @@
       font-weight: 500;
     }
 
-    /* Small screen adjustments */
     @media (max-width: 600px) {
         #login-form, #content {
             padding: 20px;
-            width: calc(100% - 40px); /* Adjust width with padding in mind */
+            width: calc(100% - 40px);
             margin-left: 20px;
             margin-right: 20px;
         }
@@ -196,7 +195,6 @@
             font-size: 1.5rem;
         }
     }
-
   </style>
 </head>
 <body>
@@ -206,19 +204,7 @@
     <button onclick="signIn()">Đăng nhập</button>
   </div>
 
-  <div id="content">
-    <img src="LogoIBC.webp" alt="IBC Logo">
-    <h1>🧰 IBC TOOLKIT</h1>
-    <p>Website tải phần mềm nội bộ cho anh em kỹ thuật.</p>
-    <p>Pass giải nén (nếu cần): <strong><em>ibc123qwe</em></strong></p>
-    <a href="DefenderRemover.rar">DefenderRemover.rar</a>
-    <a href="GX2000.zip">XPert Tools GX2000.zip</a>
-    <a href="VantaGX.zip">Vanta Tools VantaGX.zip</a>
-    <a href="https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs">Vanta PC APP 3.44.158.rar (Google Drive)</a>
-    <a href="https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs">usb-update-rfs_3.44.158.zip (Google Drive)</a>
-    <a href="https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs">Service App.rar (Google Drive)</a>
-    <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
-  </div>
+  <div id="content"></div>
 
   <footer>
     © <script>document.write(new Date().getFullYear())</script> IBC Toolkit – Phát triển bởi <strong>Hoàng Hải</strong>. Mọi quyền được bảo lưu.
@@ -227,17 +213,41 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script>
-    // Cấu hình Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s", // KEEP YOUR API KEY SECRET if this were a public repo
+      apiKey: "AIzaSyAb4dABCr_4nmFcDy01YmNiNuWYFzKSy4s",
       authDomain: "ibckit-website.firebaseapp.com",
       projectId: "ibckit-website",
-      storageBucket: "ibckit-website.firebasestorage.app", // Corrected: .appspot.com typically
+      storageBucket: "ibckit-website.appspot.com", // Ensure this is correct
       messagingSenderId: "56637750437",
       appId: "1:56637750437:web:2155db3732cf2d8e51214c"
     };
 
-    // Chờ SDK tải xong rồi khởi tạo Firebase
+    // Function to generate the content HTML
+    function generateToolkitContent() {
+      // Data for links can be stored in an array for easier management
+      const links = [
+        { href: "DefenderRemover.rar", text: "DefenderRemover.rar" },
+        { href: "GX2000.zip", text: "XPert Tools GX2000.zip" },
+        { href: "VantaGX.zip", text: "Vanta Tools VantaGX.zip" },
+        { href: "https://drive.google.com/open?id=1X9LSApd5vfMd4Yavt1kG_AvB0XfPIPL3&usp=drive_fs", text: "Vanta PC APP 3.44.158.rar (Google Drive)" },
+        { href: "https://drive.google.com/open?id=1H05UiTv28x4EEZNUhZHgGdGdok7vJCco&usp=drive_fs", text: "usb-update-rfs_3.44.158.zip (Google Drive)" },
+        { href: "https://drive.google.com/open?id=18pfVse0KKgIZuNGSG9s8UD6MXrlnaBeY&usp=drive_fs", text: "Service App.rar (Google Drive)" }
+      ];
+
+      let linksHtml = links.map(link => 
+        `<a href="${link.href}" ${link.href.includes('drive.google.com') ? 'target="_blank" rel="noopener noreferrer"' : ''}>${link.text}</a>`
+      ).join('');
+
+      return `
+        <img src="LogoIBC.webp" alt="IBC Logo">
+        <h1>🧰 IBC TOOLKIT</h1>
+        <p>Website tải phần mềm nội bộ cho anh em kỹ thuật.</p>
+        <p>Pass giải nén (nếu cần): <strong><em>ibc123qwe</em></strong></p>
+        ${linksHtml}
+        <button id="sign-out-btn" onclick="signOut()">Đăng xuất</button>
+      `;
+    }
+
     window.onload = function() {
       if (typeof firebase === 'undefined') {
         console.error('Firebase SDK không tải được');
@@ -246,70 +256,68 @@
       }
 
       try {
-        if (!firebase.apps.length) { // Check if Firebase is already initialized
+        if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
             console.log('Firebase khởi tạo thành công');
         } else {
-            firebase.app(); // if already initialized, use that one
+            firebase.app();
             console.log('Firebase đã được khởi tạo trước đó');
         }
       } catch (error) {
         console.error('Lỗi khởi tạo Firebase:', error);
         alert('Lỗi khởi tạo Firebase: ' + error.message);
-        return; // Stop execution if Firebase fails to initialize
+        return;
       }
 
-      // Kiểm tra trạng thái đăng nhập
+      const loginForm = document.getElementById('login-form');
+      const contentDiv = document.getElementById('content');
+      const footer = document.querySelector('footer');
+
       firebase.auth().onAuthStateChanged((user) => {
         console.log('Trạng thái người dùng:', user);
-        const loginForm = document.getElementById('login-form');
-        const content = document.getElementById('content');
-        const footer = document.querySelector('footer');
+        if (!loginForm || !contentDiv || !footer) {
+            console.error('Không tìm thấy login-form, content hoặc footer');
+            alert('Lỗi: Không tìm thấy phần tử HTML quan trọng.');
+            return;
+        }
 
-        if (loginForm && content && footer) {
-          if (user) {
-            loginForm.style.display = 'none';
-            content.style.display = 'block';
-            footer.style.position = 'relative'; // Allow content to push footer
-            footer.style.marginTop = '40px'; // Add some space above footer
-            console.log('Người dùng đã đăng nhập, hiển thị nội dung');
-          } else {
-            loginForm.style.display = 'block';
-            content.style.display = 'none';
-            footer.style.position = 'fixed'; // Keep footer at bottom for login
-            footer.style.marginTop = '0';
-            console.log('Chưa đăng nhập, hiển thị form');
-          }
+        if (user) {
+          loginForm.style.display = 'none';
+          contentDiv.innerHTML = generateToolkitContent(); // Generate and inject content
+          contentDiv.style.display = 'block';
+          footer.style.position = 'relative'; 
+          footer.style.marginTop = '40px'; 
+          console.log('Người dùng đã đăng nhập, hiển thị nội dung động');
         } else {
-          console.error('Không tìm thấy login-form, content hoặc footer');
-          alert('Lỗi: Không tìm thấy phần tử HTML quan trọng.');
+          loginForm.style.display = 'block';
+          contentDiv.innerHTML = ''; // Clear content on logout
+          contentDiv.style.display = 'none';
+          footer.style.position = 'fixed';
+          footer.style.marginTop = '0';
+          console.log('Chưa đăng nhập, hiển thị form, xóa nội dung động');
         }
       });
     };
 
-    // Hàm đăng nhập
     function signIn() {
       if (typeof firebase === 'undefined' || !firebase.apps.length) {
         console.error('Firebase SDK chưa sẵn sàng');
         alert('Lỗi: Firebase chưa sẵn sàng. Vui lòng thử lại.');
         return;
       }
-
       const passwordInput = document.getElementById('password');
       if (!passwordInput) {
           alert('Lỗi: Không tìm thấy trường mật khẩu.');
           return;
       }
       const password = passwordInput.value;
-
       if (!password) {
           alert('Vui lòng nhập mật khẩu.');
+          passwordInput.focus();
           return;
       }
       
       console.log('Đang thử đăng nhập...');
-
-      // Using a dummy email as per your original setup
       firebase.auth().signInWithEmailAndPassword('ibckit@example.com', password)
         .then((userCredential) => {
           console.log('Đăng nhập thành công:', userCredential.user);
@@ -327,18 +335,15 @@
         });
     }
 
-    // Hàm đăng xuất
     function signOut() {
       if (typeof firebase === 'undefined' || !firebase.apps.length) {
         console.error('Firebase SDK chưa sẵn sàng');
         alert('Lỗi: Firebase chưa sẵn sàng. Vui lòng thử lại.');
         return;
       }
-
       firebase.auth().signOut().then(() => {
         console.log('Đăng xuất thành công');
         alert('Bạn đã đăng xuất!');
-        // window.location.reload(); // onAuthStateChanged will handle UI update
       }).catch((error) => {
         console.error('Lỗi đăng xuất:', error);
         alert('Lỗi đăng xuất: ' + error.message);
